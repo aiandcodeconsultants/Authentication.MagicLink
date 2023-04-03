@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.MagicLink", "Authentication.MagicLink\Authentication.MagicLink.csproj", "{A3C2133F-C320-44FA-A60D-44EC2B693AA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.MagicLink.Tests", "Authentication.MagicLink.Tests\Authentication.MagicLink.Tests.csproj", "{690982F3-E0DC-4CDC-A88E-0077633C11CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3C2133F-C320-44FA-A60D-44EC2B693AA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3C2133F-C320-44FA-A60D-44EC2B693AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3C2133F-C320-44FA-A60D-44EC2B693AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3C2133F-C320-44FA-A60D-44EC2B693AA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{690982F3-E0DC-4CDC-A88E-0077633C11CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{690982F3-E0DC-4CDC-A88E-0077633C11CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{690982F3-E0DC-4CDC-A88E-0077633C11CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{690982F3-E0DC-4CDC-A88E-0077633C11CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
