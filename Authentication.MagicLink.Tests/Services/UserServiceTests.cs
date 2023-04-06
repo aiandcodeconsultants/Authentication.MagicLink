@@ -8,7 +8,7 @@ public class UserServiceTests
     public UserServiceTests()
     {
         var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
+            .AddJsonFile("appsettings.test.json", false)
             .Build();
 
         var services = new ServiceCollection()

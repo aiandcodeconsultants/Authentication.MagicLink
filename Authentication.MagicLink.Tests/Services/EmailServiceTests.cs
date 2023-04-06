@@ -9,27 +9,29 @@ public class EmailServiceTests
     public EmailServiceTests()
     {
         var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
+            .AddJsonFile("appsettings.test.json", false)
             .Build();
 
         // var services = new ServiceCollection()
         //     .AddAuthenticationMagicLink(configuration)
         //     .BuildServiceProvider();
 
-        var options = Options.Create<MagicLinkOptions>(configuration.GetSection("MagicLink").Get<MagicLinkOptions>() ?? new ());
+        var options = Options.Create(configuration.GetSection("MagicLink").Get<MagicLinkSettings>() ?? new());
+        //var smtpOptions = Options.Create<SmtpOptions>(configuration.GetSection("MagicLink").Get<MagicLinkSettings>() ?? new());
+        var host = configuration.GetValue<string>("Smtp:Host") ?? "localhost";
+        var port = configuration.GetValue<int?>("Smtp:Port") ?? 25;
 
         // _smtpEmailService = services.GetRequiredService<IEmailService>();
         // _sendGridEmailService = services.GetRequiredService<IEmailService>();
         // _mailKitEmailService = services.GetRequiredService<IEmailService>();
-        _smtpEmailService = new SmtpEmailService(new System.Net.Mail.SmtpClient());
+        _smtpEmailService = new SmtpEmailService(new System.Net.Mail.SmtpClient(host, port));
         _sendGridEmailService = new SendGridEmailService(options);
         _mailKitEmailService = new MailKitEmailService(options);
     }
 
-    // Depending on the email service you are testing, replace _emailService with the appropriate instance
     [Theory]
     [InlineData("test@example.com", "Test Subject", "Test Body")]
-    public async Task SendEmailAsync_ValidEmailData_EmailSent(string to, string subject, string body)
+    public async Task SendEmailAsync_ValidEmailData_EmailSent_MailKit(string to, string subject, string body)
     {
         // Arrange
         var emailMessage = new EmailMessage
@@ -40,13 +42,45 @@ public class EmailServiceTests
         };
 
         // Act
-        /* var smtpResult = */ await _smtpEmailService.SendEmailAsync(emailMessage);
-        /* var sendGridResult = */ await _sendGridEmailService.SendEmailAsync(emailMessage);
-        /* var mailKitResult = */ await _mailKitEmailService.SendEmailAsync(emailMessage);
+        await _mailKitEmailService.SendEmailAsync(emailMessage);
 
         // Assert
-        // Assert.True(smtpResult);
-        // Assert.True(sendGridResult);
-        // Assert.True(mailKitResult);
+    }
+
+    [Theory]
+    [InlineData("test@example.com", "Test Subject", "Test Body")]
+    public async Task SendEmailAsync_ValidEmailData_EmailSent_Smtp(string to, string subject, string body)
+    {
+        // Arrange
+        var emailMessage = new EmailMessage
+        {
+            To = to,
+            Subject = subject,
+            Body = body
+        };
+
+        // Act
+        await _smtpEmailService.SendEmailAsync(emailMessage);
+
+        // Assert
+    }
+
+    // Depending on the email service you are testing, replace _emailService with the appropriate instance
+    [Theory]
+    [InlineData("test@example.com", "Test Subject", "Test Body")]
+    public async Task SendEmailAsync_ValidEmailData_EmailSent_SendGrid(string to, string subject, string body)
+    {
+        // Arrange
+        var emailMessage = new EmailMessage
+        {
+            To = to,
+            Subject = subject,
+            Body = body
+        };
+
+        // Act
+        await _sendGridEmailService.SendEmailAsync(emailMessage);
+
+        // Assert
     }
 }

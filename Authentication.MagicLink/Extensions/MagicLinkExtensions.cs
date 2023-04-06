@@ -4,7 +4,7 @@ namespace Authentication.MagicLink.Extensions;
 
 public static class MagicLinkExtensions
 {
-    public static IServiceCollection AddMagicLinkAuthentication(this IServiceCollection services, Action<MagicLinkOptions> configureOptions)
+    public static IServiceCollection AddMagicLinkAuthentication(this IServiceCollection services, Action<MagicLinkSettings> configureOptions)
     {
         services.Configure(configureOptions);
         services.AddSingleton<IUserService, UserService>();

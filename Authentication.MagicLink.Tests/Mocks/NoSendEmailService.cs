@@ -1,6 +1,6 @@
 namespace Authentication.MagicLink.Tests.Mocks;
 
-public class MockEmailService : IEmailService
+public class NoSendEmailService : IEmailService
 {
     public List<EmailMessage> SentMessages { get; } = new();
     public Task SendEmailAsync(EmailMessage email)

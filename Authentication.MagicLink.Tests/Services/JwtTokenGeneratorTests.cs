@@ -9,7 +9,7 @@ public class JwtTokenGeneratorTests
     public JwtTokenGeneratorTests()
     {
         var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
+            .AddJsonFile("appsettings.test.json", false)
             .Build();
 
         var services = new ServiceCollection()
@@ -28,7 +28,7 @@ public class JwtTokenGeneratorTests
         // Act
         var token = _jwtTokenGenerator.GenerateToken(userId);
         var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
-        var userIdClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "id");
+        var userIdClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "id") ?? jwtToken.Claims.FirstOrDefault(c => c.Type == "nameid");
 
         // Assert
         Assert.NotNull(jwtToken);
@@ -37,14 +37,15 @@ public class JwtTokenGeneratorTests
     }
 
     [Fact]
-    public async Task GenerateToken_WithCustomOptions_ReturnsTokenWithCorrectExpiration()
+    public void GenerateToken_WithCustomOptions_ReturnsTokenWithCorrectExpiration()
     {
         // Arrange
         var userId = Guid.NewGuid().ToString();
-        var customOptions = new MagicLinkOptions
+        var customOptions = new MagicLinkSettings
         {
-            //TokenExpirationMinutes = 5,
-            TokenExpiration = TimeSpan.FromMinutes(5),
+            TokenExpirationMinutes = 5,
+            //TokenExpiration = TimeSpan.FromMinutes(5),
+            SecretKey = Guid.NewGuid().ToString(),
         };
         var generator = new JwtTokenGenerator(Options.Create(customOptions));
 
@@ -54,6 +55,6 @@ public class JwtTokenGeneratorTests
 
         // Assert
         Assert.NotNull(jwtToken);
-        Assert.True(jwtToken.ValidTo <= DateTime.UtcNow.Add(customOptions.TokenExpiration));
+        Assert.True(jwtToken.ValidTo <= DateTime.UtcNow.AddMinutes(customOptions.TokenExpirationMinutes));
     }
 }

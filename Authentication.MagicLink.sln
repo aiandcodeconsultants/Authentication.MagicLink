@@ -3,17 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.MagicLink", "Authentication.MagicLink\Authentication.MagicLink.csproj", "{A3C2133F-C320-44FA-A60D-44EC2B693AA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.MagicLink", "Authentication.MagicLink\Authentication.MagicLink.csproj", "{A3C2133F-C320-44FA-A60D-44EC2B693AA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.MagicLink.Tests", "Authentication.MagicLink.Tests\Authentication.MagicLink.Tests.csproj", "{690982F3-E0DC-4CDC-A88E-0077633C11CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.MagicLink.Tests", "Authentication.MagicLink.Tests\Authentication.MagicLink.Tests.csproj", "{690982F3-E0DC-4CDC-A88E-0077633C11CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.MagicLink.ExampleWeb", "Authentication.MagicLink.ExampleWeb\Authentication.MagicLink.ExampleWeb.csproj", "{87E87820-1D78-4316-A37D-F8AFDB50D81A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A3C2133F-C320-44FA-A60D-44EC2B693AA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -24,5 +23,15 @@ Global
 		{690982F3-E0DC-4CDC-A88E-0077633C11CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{690982F3-E0DC-4CDC-A88E-0077633C11CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{690982F3-E0DC-4CDC-A88E-0077633C11CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87E87820-1D78-4316-A37D-F8AFDB50D81A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87E87820-1D78-4316-A37D-F8AFDB50D81A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87E87820-1D78-4316-A37D-F8AFDB50D81A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87E87820-1D78-4316-A37D-F8AFDB50D81A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {15D688D5-9542-41B4-B358-E185D2D1DAE4}
 	EndGlobalSection
 EndGlobal

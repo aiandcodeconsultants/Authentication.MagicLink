@@ -14,13 +14,13 @@ public class AuthenticationServiceTests
         {
             options.Issuer = "test";
             options.Audience = "test";
-            options.SecretKey = "your_secret_key";
-            //options.TokenExpirationMinutes = 5;
-            options.TokenExpiration = TimeSpan.FromMinutes(5);
+            options.SecretKey = "ThisIsS0m3K3yY0uH@v3Thrown1nH3r3";
+            options.TokenExpirationMinutes = 5;
+            //options.TokenExpiration = TimeSpan.FromMinutes(5);
             options.MagicLinkBaseUrl = "https://example.com/magiclink";
         });
 
-        services.AddEmailProvider<MockEmailService>();
+        services.AddEmailProvider<NoSendEmailService>();
         var serviceProvider = services.BuildServiceProvider();
 
         _magicLinkService = serviceProvider.GetRequiredService<IMagicLinkService>();
@@ -38,7 +38,7 @@ public class AuthenticationServiceTests
 
         // Assert
         Assert.NotNull(magicLink);
-        Assert.Contains(user.Id, magicLink);
+        //Assert.Contains(user.Id, magicLink); // NB: A token is provided, not the id, so canont check anything further
     }
 
     // Add more test cases for other services and components.

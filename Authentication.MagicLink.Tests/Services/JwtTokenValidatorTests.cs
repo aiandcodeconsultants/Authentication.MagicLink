@@ -1,7 +1,3 @@
-using Authentication.MagicLink.Extensions;
-using System.Diagnostics;
-using Xunit;
-
 namespace Authentication.MagicLink.Services;
 
 public class JwtTokenValidatorTests
@@ -12,10 +8,12 @@ public class JwtTokenValidatorTests
     public JwtTokenValidatorTests()
     {
         var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
+            //.AddJsonFile("appsettings.json")
+            .AddJsonFile("appsettings.test.json", false)
             .Build();
 
         var services = new ServiceCollection()
+            .AddSingleton(configuration)
             .AddAuthenticationMagicLink(configuration)
             .BuildServiceProvider();
 

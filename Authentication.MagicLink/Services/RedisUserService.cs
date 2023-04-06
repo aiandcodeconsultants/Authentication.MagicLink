@@ -12,9 +12,16 @@ public class RedisUserService : IUserService
         _cache = cache;
     }
 
-    public async Task<User> GetUserByIdAsync(string userId)
+    public async Task<User?> GetUserByIdAsync(string userId)
     {
         var userJson = await _cache.GetStringAsync(userId);
+        return userJson == null ? null : JsonSerializer.Deserialize<User>(userJson);
+    }
+
+    public async Task<User?> GetUserByEmailAsync(string email)
+    {
+        var userId = await _cache.GetStringAsync(email);
+        var userJson = userId == null ? null : await _cache.GetStringAsync(userId);
         return userJson == null ? null : JsonSerializer.Deserialize<User>(userJson);
     }
 
@@ -26,9 +33,11 @@ public class RedisUserService : IUserService
         // Set the user data with an expiration time
         var options = new DistributedCacheEntryOptions
         {
-            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
+            //AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
+            SlidingExpiration = TimeSpan.FromMinutes(10)
         };
         await _cache.SetStringAsync(user.Id, userJson, options);
+        await _cache.SetStringAsync(email, user.Id, options);
 
         return user;
     }

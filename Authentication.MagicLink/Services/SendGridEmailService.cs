@@ -6,9 +6,9 @@ namespace Authentication.MagicLink.Services;
 
 public class SendGridEmailService : IEmailService
 {
-    private readonly MagicLinkOptions _options;
+    private readonly MagicLinkSettings _options;
 
-    public SendGridEmailService(IOptions<MagicLinkOptions> options)
+    public SendGridEmailService(IOptions<MagicLinkSettings> options)
     {
         _options = options.Value;
     }

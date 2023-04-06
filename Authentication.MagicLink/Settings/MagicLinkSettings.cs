@@ -1,19 +1,23 @@
-namespace Authentication.MagicLink.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
+namespace Authentication.MagicLink.Settings;
+
 /// <summary>An options model for magic-link settings.</summary>
-public class MagicLinkOptions
+public class MagicLinkSettings
 {
     /// <summary>The issuer.</summary>
     public string Issuer { get; set; } = "localhost";
-    
+
     /// <summary>The audience.</summary>
     public string Audience { get; set; } = "localhost";
-    
+
     /// <summary>The secret key.</summary>
     public string SecretKey { get; set; } = "your_secret_key";
-    
-    /// <summary>The token expiration.</summary>
-    public TimeSpan TokenExpiration { get; set; } = TimeSpan.FromMinutes(5);
-    
+
+    /// <summary>The token expiration in minutes.</summary>
+    //public TimeSpan TokenExpiration { get; set; } = TimeSpan.FromMinutes(5);
+    public double TokenExpirationMinutes { get; set; } = 5.0;
+
     /// <summary>The magic link base URL.</summary>
     public string MagicLinkBaseUrl { get; set; } = "https://localhost/magiclink";
 
@@ -29,11 +33,12 @@ public class MagicLinkOptions
     /// <summary>The SendGrid API key.</summary>
     public string SendGridApiKey { get; set; } = "<YourSendGridApiKey>";
 
-    /// <summary>The MailKit server.</summary>
-    public string MailKitServer { get; set; } = "localhost";
+    /// <summary>The Mail server.</summary>
+    public string MailServer { get; set; } = "localhost";
 
     /// <summary>The MailKit port.</summary>
-    public int MailKitPort { get; set; } = 587;
+    //public int MailKitPort { get; set; } = 587;
+    public int MailKitPort { get; set; } = 25;
 
     /// <summary>Whether MailKit should use SSL.</summary>
     public bool MailKitUseSsl { get; set; } = false;
@@ -42,8 +47,17 @@ public class MagicLinkOptions
     public string MailKitUsername { get; set; } = "<YourMailKitUsername>";
 
     /// <summary>The MailKit password.</summary>
-    public string MailKitPassword { get; set; } = "<YourMailKitPassword>";    
+    public string MailKitPassword { get; set; } = "<YourMailKitPassword>";
 
     /// <summary>Set to true to enable the distributed chaching for users ("redis" connection string).</summary>
     public bool UseDistributedCache { get; set; } = false;
+
+    /// <summary>The schema.</summary>
+    public string Schema { get; set; } = "MagicLink";
+
+    /// <summary>The bearer schema.</summary>
+    public string BearerSchema { get; set; } = JwtBearerDefaults.AuthenticationScheme;
+
+    /// <summary>Set to false to disable automatic user creation.</summary>
+    public bool AutoCreateUsers { get; set; } = true;
 }

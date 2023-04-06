@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+//using Authentication.MagicLink.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -8,17 +9,16 @@ namespace Authentication.MagicLink.Services;
 
 public class JwtTokenValidator : ITokenValidator
 {
-    private readonly MagicLinkOptions _options;
+    private readonly MagicLinkSettings _options;
 
-    public JwtTokenValidator(IOptions<MagicLinkOptions> options)
-    {
-        _options = options.Value;
-    }
+    public JwtTokenValidator(IOptions<MagicLinkSettings> options) => _options = options.Value;
 
-    public bool ValidateToken(string token, out string userId)
+    //public bool ValidateToken(string token, out string userId)
+    public bool ValidateToken(string token, out string email)
     {
 #nullable disable
-        userId = null;
+        //userId = null;
+        email = null;
         var tokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
@@ -35,10 +35,12 @@ public class JwtTokenValidator : ITokenValidator
         try
         {
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out _);
-            userId = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            return !string.IsNullOrEmpty(userId);
+            //userId = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            //return !string.IsNullOrEmpty(userId);
+            return !string.IsNullOrEmpty(email);
         }
-        catch (Exception)
+        catch /*(Exception ex)*/
         {
             return false;
         }

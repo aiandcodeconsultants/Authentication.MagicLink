@@ -14,6 +14,9 @@ public class UserService : IUserService
     public Task<User?> GetUserByIdAsync(string userId)
         => Task.FromResult(_users.ContainsKey(userId) ? _users[userId] : null);
 
+    public Task<User?> GetUserByEmailAsync(string email)
+        => Task.FromResult(_users.Values.FirstOrDefault(u => u.Email == email));
+
     /// <inheritdoc /
     //public async Task<User> CreateUserAsync(string email)
     public Task<User> CreateUserAsync(string email)

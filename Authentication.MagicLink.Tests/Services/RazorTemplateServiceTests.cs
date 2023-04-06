@@ -1,3 +1,7 @@
+using RazorLight;
+using RazorLight.Compilation;
+using System.Reflection;
+
 namespace Authentication.MagicLink.Tests.Services;
 
 public class RazorTemplateServiceTests
@@ -6,11 +10,16 @@ public class RazorTemplateServiceTests
     public RazorTemplateServiceTests()
     {
         var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
+            .AddJsonFile("appsettings.test.json", false)
             .Build();
+
+        var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        //var razorTemplateService = new RazorTemplateService(basePath);
+        //var razorTemplateService = new RazorTemplateService(basePath);
 
         var services = new ServiceCollection()
             .AddAuthenticationMagicLink(configuration)
+            .AddSingleton<IRenderTemplate>(sp => new RazorTemplateService(basePath!))
             .BuildServiceProvider();
 
         _razorTemplateService = services.GetRequiredService<IRenderTemplate>();
@@ -47,7 +56,8 @@ public class RazorTemplateServiceTests
         };
 
         // Act & Assert
-        await Assert.ThrowsAsync<InvalidOperationException>(async () => await _razorTemplateService.RenderAsync(templateName, model));
+        //await Assert.ThrowsAsync<InvalidOperationException>(async () => await _razorTemplateService.RenderAsync(templateName, model));
+        await Assert.ThrowsAsync<TemplateCompilationException>(async () => await _razorTemplateService.RenderAsync(templateName, model));
     }
 
     [Fact]
@@ -62,7 +72,8 @@ public class RazorTemplateServiceTests
         };
 
         // Act & Assert
-        await Assert.ThrowsAsync<FileNotFoundException>(async () => await _razorTemplateService.RenderAsync(templateName, model));
+        //await Assert.ThrowsAsync<FileNotFoundException>(async () => await _razorTemplateService.RenderAsync(templateName, model));
+        await Assert.ThrowsAsync<TemplateNotFoundException>(async () => await _razorTemplateService.RenderAsync(templateName, model));
     }
 
     [Fact]
