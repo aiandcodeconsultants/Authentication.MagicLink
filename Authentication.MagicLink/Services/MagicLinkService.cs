@@ -44,7 +44,7 @@ public class MagicLinkService : IMagicLinkService
             {
                 To = user.Email,
                 Subject = "Magic Link",
-                Body = $"Click the following link to sign in: {magicLink}"
+                Body = $"Click the following link to sign in: <br/><a href=\"{magicLink}\">{magicLink}</a>",
             };
             await _emailService.SendEmailAsync(emailMessage);
         }

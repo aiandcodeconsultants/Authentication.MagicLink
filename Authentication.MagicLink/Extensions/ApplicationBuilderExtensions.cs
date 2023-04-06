@@ -62,10 +62,11 @@ public static class ApplicationBuilderExtensions
             context.Response.Redirect("/");
         });
 
-        app.MapGet(userInfoPath, async ([FromServices] IUserService userService, [FromServices]ClaimsPrincipal claimPrincipal) =>
+        app.MapGet(userInfoPath, async ([FromServices] IUserService userService, [FromServices]IHttpContextAccessor httpContextAccessor) =>
         {
-            var user = await userService.GetUserByIdAsync(claimPrincipal.Identity.Name);
-            var userByEmail = await userService.GetUserByEmailAsync(claimPrincipal.Claims.First(c => c.Type == ClaimTypes.Email).Value);
+            var claimsPrincipal = httpContextAccessor.HttpContext.User;
+            var user = await userService.GetUserByIdAsync(claimsPrincipal.Identity.Name);
+            var userByEmail = await userService.GetUserByEmailAsync(claimsPrincipal.Claims.First(c => c.Type == ClaimTypes.Email).Value);
             // Handle user info logic here.
             return Results.Content(System.Text.Json.JsonSerializer.Serialize(user ?? userByEmail), "application/json");
         }).RequireAuthorization("Authenticated");
