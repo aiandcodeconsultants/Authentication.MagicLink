@@ -1,11 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <LangVersion>Preview</LangVersion>
-	  
-	  
+	<LangVersion>Preview</LangVersion>
+	<!-- NuGet package settings -->
+	<Version>1.0.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Authentication.MagicLink</PackageId>
+    <Authors>Your Name</Authors>
+    <Company>Your Company</Company>
+    <Copyright>Copyright © Your Company 2023</Copyright>
+    <Description>A simple and flexible Magic Link authentication library for ASP.NET Core.</Description>
+    <RepositoryUrl>https://github.com/YourUsername/Authentication.MagicLink</RepositoryUrl>
+    <PackageTags>ASP.NET Core Authentication Magic Link</PackageTags>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion> 
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MailKit" Version="3.6.0" />
