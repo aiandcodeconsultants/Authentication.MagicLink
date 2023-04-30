@@ -11,7 +11,7 @@
     "MailKitUseSsl": false,
     "MailKitUsername": "",
     "MailKitPassword":  "",
-    "SendGridApiKey": "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"
+    "SendGridApiKey": ""
   },
   "ConnectionStrings": {
     "Redis": "localhost:6379"
