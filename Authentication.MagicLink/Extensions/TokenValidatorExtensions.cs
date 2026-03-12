@@ -4,5 +4,5 @@ namespace Authentication.MagicLink.Extensions;
 public static class TokenValidatorExtensions
 {
     public static string? ValidateToken(this ITokenValidator tokenValidator, string token)
-        => tokenValidator.ValidateToken(token, out string userId) ? null : userId;
+        => tokenValidator.ValidateToken(token, out string email) ? email : null;
 }

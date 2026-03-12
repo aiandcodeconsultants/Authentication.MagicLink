@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text;
 using Authentication.MagicLink.Tests.Services;
 using Microsoft.AspNetCore.Mvc.Razor.Extensions;
 using Microsoft.AspNetCore.Razor.Language;
@@ -112,7 +113,7 @@ public static class ServiceCollectionExtensions
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = jwtIssuer,
                 ValidAudience = jwtAudience,
-                IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(jwtSecretKey)),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecretKey)),
             };
         })
         // this is the key piece for cookies + jwt/bearer - See https://weblog.west-wind.com/posts/2022/Mar/29/Combining-Bearer-Token-and-Cookie-Auth-in-ASPNET
