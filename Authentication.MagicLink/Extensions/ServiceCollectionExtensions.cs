@@ -81,7 +81,7 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddAuthorization(options => {
-            // See https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-7.0
+            // See https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-8.0
             options.AddPolicy("AdminOnly", policy => {
                 policy.RequireRole("Administrator");
             });
