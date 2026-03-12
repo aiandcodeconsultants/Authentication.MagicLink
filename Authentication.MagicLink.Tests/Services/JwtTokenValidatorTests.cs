@@ -8,7 +8,6 @@ public class JwtTokenValidatorTests
     public JwtTokenValidatorTests()
     {
         var configuration = new ConfigurationBuilder()
-            //.AddJsonFile("appsettings.json")
             .AddJsonFile("appsettings.test.json", false)
             .Build();
 

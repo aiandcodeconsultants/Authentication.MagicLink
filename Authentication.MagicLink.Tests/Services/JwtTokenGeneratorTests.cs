@@ -44,7 +44,6 @@ public class JwtTokenGeneratorTests
         var customOptions = new MagicLinkSettings
         {
             TokenExpirationMinutes = 5,
-            //TokenExpiration = TimeSpan.FromMinutes(5),
             SecretKey = Guid.NewGuid().ToString(),
         };
         var generator = new JwtTokenGenerator(Options.Create(customOptions));

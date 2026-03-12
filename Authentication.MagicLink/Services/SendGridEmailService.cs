@@ -13,7 +13,6 @@ public class SendGridEmailService : IEmailService
         _options = options.Value;
     }
 
-    // public async Task<bool> SendEmailAsync(string to, string subject, string htmlContent)
     public async Task SendEmailAsync(EmailMessage message)
     {
         var to = message.To;
@@ -26,8 +25,6 @@ public class SendGridEmailService : IEmailService
         var recipient = new EmailAddress(to);
         var msg = MailHelper.CreateSingleEmail(from, recipient, subject, "", htmlContent);
 
-        // var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
-        // return response.IsSuccessStatusCode;
         await client.SendEmailAsync(msg).ConfigureAwait(false);
     }
 }

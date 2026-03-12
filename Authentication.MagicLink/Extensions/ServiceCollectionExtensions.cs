@@ -16,7 +16,6 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddAuthenticationMagicLink(this IServiceCollection services, IConfiguration configuration, bool addRazorTemplateService = true, bool addHttpContextAccessor = true, string policyName = JwtOrCookiePolicy)
     {
         var magicLinkSection = configuration.GetSection("MagicLink");
-        //var magicLinkOptions = configuration.GetValue<MagicLinkSettings>("MagicLink");
         var magicLinkOptions = new MagicLinkSettings();
 
         // Register options
@@ -33,7 +32,6 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IMagicLinkService, MagicLinkService>();
         services.AddSingleton<ITokenGenerator, JwtTokenGenerator>();
         services.AddSingleton<ITokenValidator, JwtTokenValidator>();
-        //services.AddSingleton<IRenderTemplate, RazorTemplateService>();
         if(addRazorTemplateService) services.AddRazorTemplateService();
         if (addHttpContextAccessor) services.AddHttpContextAccessor();
         
@@ -92,7 +90,6 @@ public static class ServiceCollectionExtensions
         {
             options.DefaultAuthenticateScheme = magicLinkSchema;
             options.DefaultSignInScheme = magicLinkSchema;
-            //options.DefaultChallengeScheme = magicLinkSchema;
             options.DefaultScheme = policyName;
             options.DefaultChallengeScheme = policyName;
         })
@@ -101,7 +98,6 @@ public static class ServiceCollectionExtensions
             options.Cookie.Name = "MagicLink.Auth";
             options.LoginPath = "/login";
             options.LogoutPath = "/logout";
-            //options.ClaimsIssuer = magicLinkOptions.Issuer;
         })
         .AddJwtBearer(bearerSchema, options =>
         {

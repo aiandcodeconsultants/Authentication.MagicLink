@@ -1,5 +1,4 @@
 using Authentication.MagicLink.Extensions;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
@@ -32,9 +31,9 @@ public class MagicLinkService : IMagicLinkService
         if (baseUrl.StartsWith("/") && request != null)
             baseUrl = $"{request.Scheme}://{request.Host}{request.PathBase}{baseUrl}";
         var magicLink = $"{baseUrl}?token={token}";
-        
+
         var user = await _userService.GetUserByIdAsync(userId);
-        
+
         if(_options.AutoCreateUsers)
             user = await _userService.CreateUserAsync(userId);
 
@@ -55,19 +54,14 @@ public class MagicLinkService : IMagicLinkService
 
     public async Task<bool> ValidateMagicLinkAsync(string token)
     {
-        //var tokenValidator = new JwtTokenValidator();
         var tokenValidator = new JwtTokenValidator(Options.Create(_options));
-        //if (tokenValidator.ValidateToken(token, out string userId))
-        //var isValid = tokenValidator.ValidateToken(token, out string userId);
         var isValid = tokenValidator.ValidateToken(token, out string email);
         if (isValid)
         {
-            //var user = await _userService.GetUserByIdAsync(userId);
             var user = await _userService.GetUserByEmailAsync(email);
             if (user != null)
             {
                 _httpContextAccessor.HttpContext!.User = user.ToClaimsPrincipal();
-                // Perform additional authentication steps if necessary.
                 return true;
             }
         }
@@ -78,11 +72,9 @@ public class MagicLinkService : IMagicLinkService
     public async Task<ClaimsPrincipal?> GetClaimsPrincipal(string token)
     {
         var tokenValidator = new JwtTokenValidator(Options.Create(_options));
-        //var isValid = tokenValidator.ValidateToken(token, out string userId);
         var isValid = tokenValidator.ValidateToken(token, out string email);
         if (isValid)
         {
-            //var user = await _userService.GetUserByIdAsync(userId);
             var user = await _userService.GetUserByEmailAsync(email);
             if (user != null)
             {

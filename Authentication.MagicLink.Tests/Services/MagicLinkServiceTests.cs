@@ -1,6 +1,5 @@
 using Authentication.MagicLink.Tests.Extensions;
 using Authentication.MagicLink.Tests.Mocks;
-//using Moq;
 
 namespace Authentication.MagicLink.Tests.Services;
 
@@ -44,7 +43,6 @@ public class MagicLinkServiceTests
         // Arrange
         var user = await _userService.CreateUserAsync("test@example.com");
         var magicLink = await _magicLinkService.GenerateMagicLinkAsync(user.Id);
-        //var token = magicLink.Substring(magicLink.LastIndexOf('/') + 1);
         var token = magicLink.Substring(magicLink.LastIndexOf("token=") + 6);
 
         // Wait for the token to expire (assuming it's set to a short duration for testing)
@@ -63,7 +61,6 @@ public class MagicLinkServiceTests
         // Arrange
         var user = await _userService.CreateUserAsync("test@example.com");
         var magicLink = await _magicLinkService.GenerateMagicLinkAsync(user.Id);
-        //var token = magicLink.Substring(magicLink.LastIndexOf('/') + 1);
         var token = magicLink.Substring(magicLink.LastIndexOf("token=") + 6);
 
         // Act

@@ -1,7 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-//using Authentication.MagicLink.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -13,11 +12,9 @@ public class JwtTokenValidator : ITokenValidator
 
     public JwtTokenValidator(IOptions<MagicLinkSettings> options) => _options = options.Value;
 
-    //public bool ValidateToken(string token, out string userId)
     public bool ValidateToken(string token, out string email)
     {
 #nullable disable
-        //userId = null;
         email = null;
         var tokenValidationParameters = new TokenValidationParameters
         {
@@ -35,12 +32,10 @@ public class JwtTokenValidator : ITokenValidator
         try
         {
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out _);
-            //userId = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            //return !string.IsNullOrEmpty(userId);
             return !string.IsNullOrEmpty(email);
         }
-        catch /*(Exception ex)*/
+        catch
         {
             return false;
         }

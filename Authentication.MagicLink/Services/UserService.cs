@@ -6,24 +6,19 @@ public class UserService : IUserService
     // Replace it with an actual data store in production.
     private readonly Dictionary<string, User> _users = new Dictionary<string, User>();
 
-    /// <inheritdoc /
-    // public async Task<User> GetUserByIdAsync(string userId)
-    // {
-    //     return _users.ContainsKey(userId) ? _users[userId] : null;
-    // }
+    /// <inheritdoc />
     public Task<User?> GetUserByIdAsync(string userId)
         => Task.FromResult(_users.ContainsKey(userId) ? _users[userId] : null);
 
+    /// <inheritdoc />
     public Task<User?> GetUserByEmailAsync(string email)
         => Task.FromResult(_users.Values.FirstOrDefault(u => u.Email == email));
 
-    /// <inheritdoc /
-    //public async Task<User> CreateUserAsync(string email)
+    /// <inheritdoc />
     public Task<User> CreateUserAsync(string email)
     {
         var user = new User { Id = Guid.NewGuid().ToString(), Email = email };
         _users[user.Id] = user;
-        //return user;
         return Task.FromResult(user);
     }
 }

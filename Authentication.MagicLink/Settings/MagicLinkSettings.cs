@@ -15,7 +15,6 @@ public class MagicLinkSettings
     public string SecretKey { get; set; } = "your_secret_key";
 
     /// <summary>The token expiration in minutes.</summary>
-    //public TimeSpan TokenExpiration { get; set; } = TimeSpan.FromMinutes(5);
     public double TokenExpirationMinutes { get; set; } = 5.0;
 
     /// <summary>The magic link base URL.</summary>
@@ -37,7 +36,6 @@ public class MagicLinkSettings
     public string MailServer { get; set; } = "localhost";
 
     /// <summary>The MailKit port.</summary>
-    //public int MailKitPort { get; set; } = 587;
     public int MailKitPort { get; set; } = 25;
 
     /// <summary>Whether MailKit should use SSL.</summary>

@@ -26,7 +26,6 @@ public class JwtTokenGenerator : ITokenGenerator
             Issuer = _options.Issuer,
             Audience = _options.Audience,
             Expires = DateTime.UtcNow.AddMinutes(_options.TokenExpirationMinutes),
-            //Expires = DateTime.UtcNow.Add(_options.TokenExpiration),
             SigningCredentials = signingCredentials,
             Claims = claims.ToDictionary(c => c.Type, c => (object)c.Value),
             IssuedAt = DateTime.UtcNow,            

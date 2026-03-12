@@ -13,7 +13,6 @@ public class MailKitEmailService : IEmailService
         _options = options.Value;
     }
 
-    //public async Task<bool> SendEmailAsync(string to, string subject, string htmlContent)
     public async Task SendEmailAsync(EmailMessage message)
     {
         var to = message.To;
@@ -33,7 +32,5 @@ public class MailKitEmailService : IEmailService
             await client.SendAsync(email);
             await client.DisconnectAsync(true);
         }
-
-        //return true;
     }
 }
