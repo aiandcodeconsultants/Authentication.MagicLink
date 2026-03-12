@@ -1,8 +1,11 @@
 using System.Reflection;
 using System.Text;
+using System.Threading.RateLimiting;
 using Authentication.MagicLink.Tests.Services;
 using Microsoft.AspNetCore.Mvc.Razor.Extensions;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.Razor.Language;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -13,6 +16,7 @@ namespace Authentication.MagicLink.Extensions;
 public static class ServiceCollectionExtensions
 {
     public const string JwtOrCookiePolicy = "JWT_OR_COOKIE";
+    public const string MagicLinkRateLimitPolicy = "MagicLinkRateLimit";
     public static IServiceCollection AddAuthenticationMagicLink(this IServiceCollection services, IConfiguration configuration, bool addRazorTemplateService = true, bool addHttpContextAccessor = true, string policyName = JwtOrCookiePolicy)
     {
         var magicLinkSection = configuration.GetSection("MagicLink");
@@ -129,6 +133,22 @@ public static class ServiceCollectionExtensions
         })
         ;
 
+        return services;
+    }
+
+    public static IServiceCollection AddMagicLinkRateLimiting(this IServiceCollection services, int permitLimit = 5, int windowSeconds = 60)
+    {
+        services.AddRateLimiter(options =>
+        {
+            options.AddFixedWindowLimiter(MagicLinkRateLimitPolicy, opt =>
+            {
+                opt.PermitLimit = permitLimit;
+                opt.Window = TimeSpan.FromSeconds(windowSeconds);
+                opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                opt.QueueLimit = 0;
+            });
+            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+        });
         return services;
     }
 

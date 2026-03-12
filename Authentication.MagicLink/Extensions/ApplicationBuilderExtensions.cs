@@ -45,7 +45,7 @@ public static class ApplicationBuilderExtensions
             string magicLink = await magicLinkService.GenerateMagicLinkAsync(email);
 
             return Results.Content($"Magic link sent to {email}<br/><div><a href=\"/\">Home</a></div>", "text/html");
-        });
+        }).RequireRateLimiting(ServiceCollectionExtensions.MagicLinkRateLimitPolicy);
 
         app.MapGet(logoutPath, async context =>
         {
@@ -85,7 +85,7 @@ public static class ApplicationBuilderExtensions
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsync("Token is missing");
             }
-        });
+        }).RequireRateLimiting(ServiceCollectionExtensions.MagicLinkRateLimitPolicy);
 
         return app;
     }
